@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>DATA SCENT · 专业香氛机厂家</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            color: #1a1a1a;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        /* ===== 顶部导航 ===== */
+        .header {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: white;
+            padding: 60px 20px 50px;
+            text-align: center;
+        }
+        
+        .brand-logo {
+            font-size: 42px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            margin-bottom: 12px;
+            background: linear-gradient(90deg, #fff, #e0c3fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .brand-name {
+            font-size: 18px;
+            opacity: 0.9;
+            letter-spacing: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .brand-desc {
+            font-size: 14px;
+            opacity: 0.7;
+            line-height: 1.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* ===== 公司简介 ===== */
+        .about {
+            background: #f8f9fa;
+            padding: 50px 20px;
+            text-align: center;
+        }
+        
+        .about-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #1a1a1a;
+        }
+        
+        .about-text {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* ===== 分类标签 ===== */
+        .tabs {
+            background: white;
+            padding: 20px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .tab {
+            padding: 10px 24px;
+            border-radius: 25px;
+            font-size: 15px;
+            background: #f5f5f5;
+            color: #333;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        
+        .tab:hover { background: #e8e8e8; }
+        .tab.active { background: #1a1a1a; color: white; border-color: #1a1a1a; }
+        
+        /* ===== 产品网格 ===== */
+        .products {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px 80px;
+        }
+        
+        .category-section { margin-bottom: 50px; }
+        
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding: 0 10px;
+        }
+        
+        .category-icon { font-size: 32px; margin-right: 15px; }
+        .category-title { font-size: 24px; font-weight: 700; }
+        .category-count { margin-left: auto; font-size: 14px; color: #999; }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid #f0f0f0;
+        }
+        
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+            border-color: #1a1a1a;
+        }
+        
+        .card-img-wrap {
+            position: relative;
+            width: 100%;
+            padding-top: 75%;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            overflow: hidden;
+        }
+        
+        .card-img {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 80%;
+            max-height: 80%;
+            object-fit: contain;
+            transition: transform 0.4s;
+        }
+        
+        .card:hover .card-img { transform: translate(-50%, -50%) scale(1.08); }
+        
+        .card-badge {
+            position: absolute;
+            top: 15px; left: 15px;
+            background: #1a1a1a;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        
+        .card-info { padding: 20px; }
+        .card-name { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+        .card-model { font-size: 12px; color: #999; margin-bottom: 12px; }
+        .card-coverage {
+            display: inline-block;
+            background: #f0f0f0;
+            color: #333;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        
+        /* ===== 详情页 ===== */
+        .detail {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: white;
+            z-index: 2000;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .detail.active { display: block; animation: slideIn 0.35s; }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+        
+        .detail-header {
+            position: sticky;
+            top: 0;
+            background: white;
+            padding: 15px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            z-index: 100;
+        }
+        
+        .back-btn {
+            font-size: 16px;
+            color: #007aff;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px 0;
+            font-weight: 600;
+        }
+        
+        .detail-title {
+            flex: 1;
+            font-size: 18px;
+            font-weight: 700;
+            margin-left: 15px;
+        }
+        
+        .detail-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px 80px;
+        }
+        
+        .detail-product-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .detail-name { font-size: 42px; font-weight: 800; margin-bottom: 10px; color: #1a1a1a; }
+        .detail-model { font-size: 18px; color: #666; margin-bottom: 20px; }
+        
+        /* 视频区 */
+        .video-section {
+            background: #f8f9fa;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 40px;
+        }
+        
+        .video-tabs {
+            display: flex;
+            padding: 15px 20px;
+            gap: 10px;
+            border-bottom: 1px solid #e0e0e0;
+            flex-wrap: wrap;
+        }
+        
+        .video-tab {
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            background: white;
+            color: #333;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        
+        .video-tab.active { background: #1a1a1a; color: white; border-color: #1a1a1a; }
+        .video-tab:hover:not(.active) { background: #e8e8e8; }
+        .video-tab.disabled-tab { opacity: 0.4; cursor: not-allowed; }
+        
+        .video-player {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%;
+            background: #1a1a1a;
+            cursor: pointer;
+        }
+        
+        .video-player video {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+        }
+        
+        .video-placeholder {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+        }
+        
+        .video-placeholder .play-icon {
+            font-size: 64px;
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+        
+        /* 规格表 */
+        .specs-section { margin: 50px 0; }
+        
+        .section-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: #1a1a1a;
+            border-left: 4px solid #1a1a1a;
+            padding-left: 15px;
+        }
+        
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .specs-table tr { border-bottom: 1px solid #f0f0f0; }
+        .specs-table tr:last-child { border-bottom: none; }
+        .specs-table td { padding: 16px 20px; font-size: 14px; }
+        .specs-table td:first-child { width: 160px; color: #666; background: #fafafa; font-weight: 600; }
+        .specs-table td:last-child { color: #333; }
+        
+        /* 特点 */
+        .features-section { margin: 50px 0; }
+        
+        .feature-list { list-style: none; }
+        
+        .feature-list li {
+            padding: 14px 0;
+            padding-left: 30px;
+            position: relative;
+            font-size: 15px;
+            color: #333;
+            line-height: 1.6;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        
+        .feature-list li:before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #007aff;
+            font-weight: 700;
+            font-size: 18px;
+        }
+        
+        /* 备注 */
+        .notes {
+            background: #fffbeb;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 40px 0;
+            border-left: 4px solid #f59e0b;
+        }
+        
+        .notes-title { font-size: 16px; font-weight: 700; color: #92400e; margin-bottom: 10px; }
+        .notes-text { font-size: 14px; color: #78350f; line-height: 1.7; }
+        
+        /* 联系 */
+        .contact {
+            background: #f8f9fa;
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 16px;
+            margin-top: 50px;
+        }
+        
+        .contact-title { font-size: 20px; font-weight: 700; margin-bottom: 15px; color: #1a1a1a; }
+        .contact-info { font-size: 14px; color: #666; line-height: 2; }
+        
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .brand-logo { font-size: 32px; }
+            .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .card-name { font-size: 14px; }
+            .detail-name { font-size: 28px; }
+            .section-title { font-size: 22px; }
+            .specs-table td { padding: 12px 15px; font-size: 13px; }
+            .specs-table td:first-child { width: 110px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部品牌 -->
+    <div class="header">
+        <div class="brand-logo">DATA SCENT</div>
+        <div class="brand-name">广州达塔香氛科技有限公司</div>
+        <div class="brand-desc">
+            专业研发、生产、销售香氛机及香薰设备<br>
+            产品覆盖车载、家居、商用全场景<br>
+            支持OEM/ODM定制，品质保证
+        </div>
+    </div>
+    
+    <!-- 公司简介 -->
+    <div class="about">
+        <div class="about-title">关于我们</div>
+        <div class="about-text">
+            广州达塔香氛科技有限公司成立于XXXX年，专注于香氛机研发制造。<br>
+            拥有完整生产线，产品通过CE、RoHS等认证。<br>
+            服务全球客户提供高品质香氛解决方案。
+        </div>
+    </div>
+    
+    <!-- 分类 -->
+    <div class="tabs">
+        <button class="tab active" onclick="filterProducts('all', this)">全部产品</button>
+        <button class="tab" onclick="filterProducts('car', this)">车载香薰</button>
+        <button class="tab" onclick="filterProducts('home', this)">家居商用</button>
+        <button class="tab" onclick="filterProducts('biz', this)">工程商用</button>
+    </div>
+    
+    <!-- 产品列表 -->
+    <div class="products" id="products"></div>
+    
+    <!-- 详情页 -->
+    <div class="detail" id="detailPage">
+        <div class="detail-header">
+            <button class="back-btn" onclick="closeDetail()">← 返回</button>
+            <div class="detail-title" id="detailTitle">产品详情</div>
+        </div>
+        <div class="detail-content" id="detailContent"></div>
+    </div>
+    
+    <script>
+    // ===== 全部15款产品数据 =====
+    // videos: 开箱、安装、加精油、调试（按键/App）共4个视频
+    const products = [
+    
+        // ===== 车载系列 =====
+        {
+            id: 'tc010',
+            name: '车载出风口香薰',
+            model: 'TC010',
+            category: 'car',
+            coverage: '30m³',
+            badge: '热销',
+            image: 'images/chezaichukou.jpeg',
+            specs: {
+                '覆盖空间': '30m³',
+                '产品材质': '金属',
+                '安装方式': '汽车出风口',
+                '操作方式': '自然挥发',
+                '香片续航': '30-45天',
+                '香型选择': '禅茶/松花敬茶',
+                '包装方式': '礼品盒',
+                '产品尺寸': '标准出风口夹',
+                '重量': '约50g',
+                '适用车型': '所有车型'
+            },
+            features: [
+                '极简金属设计，质感出众',
+                '自然挥发，无需通电',
+                '长效留香30-45天',
+                '随空调风自动扩香',
+                '礼品盒包装，送礼佳品'
+            ],
+            notes: '钙片香片持续留香，适合新车除味、日常香氛。',
+            videos: {
+                unbox: 'videos/tc010_unbox.mp4',
+                install: 'videos/tc010_install.mp4',
+                oil: 'videos/tc010_oil.mp4',
+                debug: 'videos/tc010_debug.mp4'
+            }
+        },
+        {
+            id: 'tc100',
+            name: '车载香薰机',
+            model: 'TC100',
+            category: 'car',
+            coverage: '100m³',
+            badge: '推荐',
+            image: 'images/tc100.png',
+            specs: {
+                '覆盖空间': '100m³',
+                '精油容量': '7.5ml×4瓶',
+                '产品材质': 'PP+玻璃瓶',
+                '安装方式': '出风口/挂壁两用',
+                '工作电压': 'DC5V',
+                '功率': '1.5W',
+                '噪音': '<32dB',
+                '工作模式': '4档智能调节',
+                '智能功能': '停车自动休眠',
+                '充电接口': 'USB-C',
+                '续航时间': '充满可用7-10天',
+                '产品尺寸': '120×60×40mm',
+                '重量': '约150g'
+            },
+            features: [
+                '4档智能喷香模式',
+                '智能启停，停车自动休眠',
+                'USB-C充电，便携实用',
+                '标配4瓶精油，即买即用',
+                '出风口+挂壁两用'
+            ],
+            notes: '可定制包装，激光LOGO+1元/台。适合作为企业礼品。',
+            videos: {
+                unbox: 'videos/tc100_unbox.mp4',
+                install: 'videos/tc100_install.mp4',
+                oil: 'videos/tc100_oil.mp4',
+                debug: 'videos/tc100_debug.mp4'
+            }
+        },
+        {
+            id: 'tccup',
+            name: '车载杯座香薰机',
+            model: 'TC-CUP',
+            category: 'car',
+            coverage: '100m³',
+            badge: '',
+            image: 'images/chezaibei.png',
+            specs: {
+                '覆盖空间': '100m³',
+                '精油容量': '10ml',
+                '产品材质': '金属+ABS',
+                '安装方式': '杯座放置',
+                '工作电压': 'DC5V',
+                '功率': '1W',
+                '噪音': '<30dB',
+                '雾化方式': '二流体雾化',
+                '电源线长': '1.5米',
+                '产品尺寸': '直径70×高120mm',
+                '重量': '约200g',
+                '颜色选择': '黑色/银色/金色'
+            },
+            features: [
+                '杯座设计，即插即用',
+                '5V插电，持续工作',
+                '二流体雾化，雾化细腻',
+                '多色可选，适配内饰',
+                '机身小巧，不占空间'
+            ],
+            notes: '机身小喷雾大，适合各类车型杯座。',
+            videos: {
+                unbox: 'videos/tccup_unbox.mp4',
+                install: 'videos/tccup_install.mp4',
+                oil: 'videos/tccup_oil.mp4',
+                debug: 'videos/tccup_debug.mp4'
+            }
+        },
+        
+        // ===== 家居商用系列 =====
+        {
+            id: 'ld501',
+            name: '灵动香氛机',
+            model: 'LD501',
+            category: 'home',
+            coverage: '500m³',
+            badge: '性价比',
+            image: 'images/LD501.png',
+            specs: {
+                '覆盖空间': '500m³',
+                '精油容量': '260ml',
+                '产品材质': 'PP(超肌肤手感)',
+                '安装方式': '平放/挂壁',
+                '工作电压': 'DC12V',
+                '功率': '8W',
+                '噪音': '<38dB',
+                '操控方式': '按键/蓝牙APP',
+                '定时功能': '支持',
+                '精油消耗': '1.5ml/h(最大)',
+                '产品尺寸': '200×150×180mm',
+                '重量': '约800g',
+                '适用场景': '家居/办公室/小商铺'
+            },
+            features: [
+                '超肌肤手感材质，触感舒适',
+                '超静音38dB，不影响休息',
+                '隐藏式电源口，美观整洁',
+                '260ml大容量，减少添加频次',
+                '支持APP智能控制'
+            ],
+            notes: '标配说明书，1000份起订可定制颜色/LOGO。',
+            videos: {
+                unbox: 'videos/ld501_unbox.mp4',
+                install: 'videos/ld501_install.mp4',
+                oil: 'videos/ld501_oil.mp4',
+                debug: 'videos/ld501_debug.mp4'
+            }
+        },
+        {
+            id: 'ld500',
+            name: '灵动香氛机',
+            model: 'LD500',
+            category: 'home',
+            coverage: '500m³',
+            badge: '热销',
+            image: 'images/LD500.png',
+            specs: {
+                '覆盖空间': '500m³',
+                '精油容量': '260ml',
+                '产品材质': 'PP(超肌肤手感)',
+                '安装方式': '平放/挂壁',
+                '工作电压': 'DC12V',
+                '功率': '8W',
+                '噪音': '<38dB',
+                '操控方式': '按键版/WIFI版',
+                '定时功能': '支持',
+                '精油消耗': '1.5ml/h(最大)',
+                '产品尺寸': '200×150×180mm',
+                '重量': '约800g',
+                'WiFi功能': '支持远程控制(WIFI版)',
+                '适用场景': '家居/办公室/小商铺'
+            },
+            features: [
+                'APP智能控制(WIFI版)',
+                '超肌肤手感，品质出众',
+                '超静音设计，低于38dB',
+                '雾化细颗粒，扩香均匀',
+                '家居香氛标杆产品'
+            ],
+            notes: '可选按键版或WIFI版，WIFI版支持远程控制。',
+            videos: {
+                unbox: 'videos/ld500_unbox.mp4',
+                install: 'videos/ld500_install.mp4',
+                oil: 'videos/ld500_oil.mp4',
+                debug: 'videos/ld500_debug.mp4'
+            }
+        },
+        {
+            id: 'tx500',
+            name: '吸顶香氛机',
+            model: 'TX500',
+            category: 'home',
+            coverage: '1000m³',
+            badge: '三合一',
+            image: 'images/TX500.png',
+            specs: {
+                '覆盖空间': '1000m³',
+                '精油容量': '400ml',
+                '产品材质': 'PP',
+                '安装方式': '吸顶/桌面/挂壁三合一',
+                '工作电压': 'DC12V',
+                '功率': '8W',
+                '噪音': '<38dB',
+                '操控方式': '按键/蓝牙/WIFI',
+                '精油消耗': '2ml/h(最大)',
+                '产品尺寸': '直径280×高120mm',
+                '重量': '约1.2kg',
+                '吸顶安装': '需预留电源',
+                '适用场景': '家居/商铺/小型办公室'
+            },
+            features: [
+                '三合一安装，灵活方便',
+                '400ml大容量，持久使用',
+                '蓝牙/WIFI调控，智能便捷',
+                '吸顶安装，不占空间',
+                '适合吊顶装修场景'
+            ],
+            notes: '吸顶安装需预留电源，加装吸顶配件+50元/台。',
+            videos: {
+                unbox: 'videos/tx500_unbox.mp4',
+                install: 'videos/tx500_install.mp4',
+                oil: 'videos/tx500_oil.mp4',
+                debug: 'videos/tx500_debug.mp4'
+            }
+        },
+        {
+            id: 'td2500',
+            name: '小魔方香氛机',
+            model: 'TD2500',
+            category: 'home',
+            coverage: '2500m³',
+            badge: '小体积',
+            image: 'images/td2500.png',
+            specs: {
+                '覆盖空间': '2500m³',
+                '精油容量': '1000ml铝瓶',
+                '产品材质': '金属',
+                '安装方式': '平放/挂壁/中央空调',
+                '工作电压': 'DC12V',
+                '功率': '13W',
+                '噪音': '<42dB',
+                '雾化量': '3g/h',
+                '精油消耗': '3ml/h(最大)',
+                '产品尺寸': '250×200×300mm',
+                '重量': '约2.5kg',
+                '挂墙设计': '三面可挂墙',
+                '适用场景': '酒店/展厅/会议室'
+            },
+            features: [
+                '体积小，安装灵活',
+                '三面可挂墙，节省空间',
+                '1000ml大容量铝瓶',
+                '简约高端设计',
+                '适合空间有限场所'
+            ],
+            notes: '三面挂墙设计，适合空间有限场所。',
+            videos: {
+                unbox: 'videos/td2500_unbox.mp4',
+                install: 'videos/td2500_install.mp4',
+                oil: 'videos/td2500_oil.mp4',
+                debug: 'videos/td2500_debug.mp4'
+            }
+        },
+        
+        // ===== 工程商用系列 =====
+        {
+            id: 'tj2500',
+            name: '酒吧香氛机',
+            model: 'TJ2500',
+            category: 'biz',
+            coverage: '2500m³',
+            badge: '专业',
+            image: 'images/tj2500.png',
+            specs: {
+                '覆盖空间': '2500m³',
+                '精油容量': '1000ml铝瓶',
+                '产品材质': '金属',
+                '安装方式': '吊杆/挂墙/平放',
+                '工作电压': 'DC12V',
+                '功率': '18W',
+                '噪音': '<50dB',
+                '送风转速': '7000转/分',
+                '送风角度': '45°',
+                '雾化量': '4g/h',
+                '精油消耗': '4ml/h(最大)',
+                '产品尺寸': '300×250×350mm',
+                '重量': '约3.5kg',
+                '适用场景': '酒吧/KTV/夜店'
+            },
+            features: [
+                '酒吧专用设计',
+                '45°送风7000R，快速扩香',
+                '多场景安装方式',
+                '1000ml大容量',
+                '专业娱乐场所首选'
+            ],
+            notes: '酒吧、KTV、夜店等专业场所首选。',
+            videos: {
+                unbox: 'videos/tj2500_unbox.mp4',
+                install: 'videos/tj2500_install.mp4',
+                oil: 'videos/tj2500_oil.mp4',
+                debug: 'videos/tj2500_debug.mp4'
+            }
+        },
+        {
+            id: 'tl2500',
+            name: '落地香氛机',
+            model: 'TL2500',
+            category: 'biz',
+            coverage: '2500m³',
+            badge: '高端',
+            image: 'images/TL2500.png',
+            specs: {
+                '覆盖空间': '2500m³',
+                '精油容量': '1000ml铝瓶',
+                '产品材质': '金属',
+                '安装方式': '落地放置',
+                '工作电压': 'DC12V',
+                '功率': '15W',
+                '噪音': '<42dB',
+                '风扇转速': '4500R',
+                '雾化量': '3.5g/h',
+                '精油消耗': '3.5ml/h(最大)',
+                '产品尺寸': '400×400×1200mm',
+                '重量': '约8kg',
+                '标配配件': '铝合金支架',
+                '适用场景': '酒店大堂/商场/展厅'
+            },
+            features: [
+                '涡轮风扇4500R，强力扩香',
+                '简约高端设计',
+                '金属机身，耐用可靠',
+                '适合酒店大堂',
+                '落地安装，稳定可靠'
+            ],
+            notes: '标配铝合金支架，落地安装。适合高端场所。',
+            videos: {
+                unbox: 'videos/tl2500_unbox.mp4',
+                install: 'videos/tl2500_install.mp4',
+                oil: 'videos/tl2500_oil.mp4',
+                debug: 'videos/tl2500_debug.mp4'
+            }
+        },
+        {
+            id: 't2pro',
+            name: '落地香氛机',
+            model: 'T2 PRO',
+            category: 'biz',
+            coverage: '2500m³',
+            badge: '旗舰',
+            image: 'images/T2PRO.png',
+            specs: {
+                '覆盖空间': '2500m³',
+                '精油容量': '1000ml铝瓶',
+                '产品材质': '金属',
+                '安装方式': '落地放置',
+                '工作电压': 'DC12V',
+                '功率': '15W',
+                '噪音': '<42dB',
+                '风扇转速': '4500R',
+                '雾化量': '3.5g/h',
+                '精油消耗': '3.5ml/h(最大)',
+                '智能功能': '定时喷香',
+                '产品尺寸': '400×400×1200mm',
+                '重量': '约8kg',
+                '适用场景': '酒店/商场/高端场所'
+            },
+            features: [
+                '旗舰级商用香氛机',
+                '涡轮风扇4500R',
+                '智能定时喷香',
+                '高端酒店标配',
+                '品质可靠'
+            ],
+            notes: 'T2 PRO / T1 PRO为同系列产品，T1 PRO为入门款。',
+            videos: {
+                unbox: 'videos/t2pro_unbox.mp4',
+                install: 'videos/t2pro_install.mp4',
+                oil: 'videos/t2pro_oil.mp4',
+                debug: 'videos/t2pro_debug.mp4'
+            }
+        },
+        {
+            id: 'ts500',
+            name: '中央空调香氛机',
+            model: 'TS500',
+            category: 'biz',
+            coverage: '500m³',
+            badge: '定制',
+            image: 'images/ts500.png',
+            specs: {
+                '覆盖空间': '500m³',
+                '精油容量': '300ml',
+                '产品材质': '钣金+铝合金',
+                '安装方式': '平放/挂壁/中央空调',
+                '工作电压': 'DC12V',
+                '功率': '8W',
+                '噪音': '<42dB',
+                '雾化量': '1.5g/h',
+                '精油消耗': '1.5ml/h(最大)',
+                '显示屏': '可选液晶屏',
+                '产品尺寸': '定制',
+                '重量': '约5kg',
+                '生产周期': '接单生产',
+                '适用场景': '中央空调系统'
+            },
+            features: [
+                '接入中央空调系统',
+                '钣金铝合金材质',
+                '可选液晶屏控制',
+                '商用级稳定可靠',
+                '需提供空调接口尺寸'
+            ],
+            notes: '无现货接单生产，需提供空调接口尺寸。',
+            videos: {
+                unbox: 'videos/ts500_unbox.mp4',
+                install: 'videos/ts500_install.mp4',
+                oil: 'videos/ts500_oil.mp4',
+                debug: 'videos/ts500_debug.mp4'
+            }
+        },
+        {
+            id: 'ts1500',
+            name: '中央空调香氛机',
+            model: 'TS1500',
+            category: 'biz',
+            coverage: '1500m³',
+            badge: '定制',
+            image: 'images/ts1500.png',
+            specs: {
+                '覆盖空间': '1500m³',
+                '精油容量': '500ml',
+                '产品材质': '钣金+铝合金',
+                '安装方式': '平放/挂壁/中央空调',
+                '工作电压': 'DC12V',
+                '功率': '13W',
+                '噪音': '<42dB',
+                '雾化量': '2.5g/h',
+                '精油消耗': '2.5ml/h(最大)',
+                '显示屏': '可选液晶屏',
+                '产品尺寸': '定制',
+                '重量': '约8kg',
+                '生产周期': '接单生产',
+                '适用场景': '中央空调系统'
+            },
+            features: [
+                '1500m³大空间覆盖',
+                '接入中央空调系统',
+                '500ml容量',
+                '钣金材质，耐用',
+                '商用稳定'
+            ],
+            notes: '无现货接单生产。',
+            videos: {
+                unbox: 'videos/ts1500_unbox.mp4',
+                install: 'videos/ts1500_install.mp4',
+                oil: 'videos/ts1500_oil.mp4',
+                debug: 'videos/ts1500_debug.mp4'
+            }
+        },
+        {
+            id: 'ts2500',
+            name: '中央空调香氛机',
+            model: 'TS2500',
+            category: 'biz',
+            coverage: '2500m³',
+            badge: '定制',
+            image: 'images/ts2500.png',
+            specs: {
+                '覆盖空间': '2500m³',
+                '精油容量': '1000ml',
+                '产品材质': '钣金+铝合金',
+                '安装方式': '平放/挂壁/中央空调',
+                '工作电压': 'DC12V',
+                '功率': '13W',
+                '噪音': '<42dB',
+                '雾化量': '3.5g/h',
+                '精油消耗': '3.5ml/h(最大)',
+                '显示屏': '可选液晶屏',
+                '产品尺寸': '定制',
+                '重量': '约10kg',
+                '生产周期': '接单生产',
+                '适用场景': '中央空调系统'
+            },
+            features: [
+                '2500m³超大覆盖',
+                '接入中央空调系统',
+                '1000ml超大容量',
+                '商用稳定可靠',
+                '专业工程选择'
+            ],
+            notes: '无现货接单生产。',
+            videos: {
+                unbox: 'videos/ts2500_unbox.mp4',
+                install: 'videos/ts2500_install.mp4',
+                oil: 'videos/ts2500_oil.mp4',
+                debug: 'videos/ts2500_debug.mp4'
+            }
+        },
+        {
+            id: 'ts8000',
+            name: '分体式双泵香氛机',
+            model: 'TS8000',
+            category: 'biz',
+            coverage: '8000m³',
+            badge: '双泵',
+            image: 'images/ts8000.png',
+            specs: {
+                '覆盖空间': '8000m³',
+                '精油容量': '1000ml×2瓶',
+                '雾化量': '4g/h×2',
+                '产品材质': '金属',
+                '安装方式': '平放/挂壁/中央空调',
+                '工作电压': 'DC12V',
+                '功率': '22W',
+                '噪音': '<42dB',
+                '泵数量': '2个',
+                '精油消耗': '8ml/h(最大)',
+                '产品尺寸': '分体式设计',
+                '重量': '约12kg',
+                '定制服务': '可定制大容量',
+                '适用场景': '大型商场/机场/体育馆'
+            },
+            features: [
+                '双雾化系统，双倍效果',
+                '双1000ml油瓶',
+                '可定制大容量',
+                '时尚小体积',
+                '适合超大空间'
+            ],
+            notes: '分体式设计：机器+配件分开包装，方便运输安装。',
+            videos: {
+                unbox: 'videos/ts8000_unbox.mp4',
+                install: 'videos/ts8000_install.mp4',
+                oil: 'videos/ts8000_oil.mp4',
+                debug: 'videos/ts8000_debug.mp4'
+            }
+        }
+    ];
+    
+    // 视频标签名
+    const videoNames = {
+        unbox: '开箱视频',
+        install: '安装教程',
+        oil: '加精油教程',
+        debug: '调试教程'
+    };
+    
+    const categoryNames = {
+        car: '🚗 车载香薰系列',
+        home: '🏠 家居商用系列',
+        biz: '🏢 工程商用系列'
+    };
+    
+    let currentProduct = null;
+    let isDetailOpen = false;
+    let currentVideoType = null;
+    
+    // ===== 渲染产品列表 =====
+    function renderProducts(category = 'all') {
+        const container = document.getElementById('products');
+        const filtered = category === 'all' ? products : products.filter(p => p.category === category);
+        
+        const grouped = {};
+        filtered.forEach(p => {
+            if (!grouped[p.category]) grouped[p.category] = [];
+            grouped[p.category].push(p);
+        });
+        
+        let html = '';
+        for (const [cat, prods] of Object.entries(grouped)) {
+            html += `
+                <div class="category-section">
+                    <div class="category-header">
+                        <span class="category-icon">${cat === 'car' ? '🚗' : cat === 'home' ? '🏠' : '🏢'}</span>
+                        <span class="category-title">${categoryNames[cat]}</span>
+                        <span class="category-count">${prods.length}款</span>
+                    </div>
+                    <div class="grid">${prods.map(p => createCard(p)).join('')}</div>
+                </div>
+            `;
+        }
+        
+        container.innerHTML = html || '<div style="text-align:center;padding:80px 20px;color:#999;">暂无产品</div>';
+    }
+    
+    function createCard(p) {
+        return `
+            <div class="card" onclick="openDetail('${p.id}')">
+                ${p.badge ? `<div class="card-badge">${p.badge}</div>` : ''}
+                <div class="card-img-wrap">
+                    <img src="${p.image}" alt="${p.name}" class="card-img" onerror="this.style.display='none'">
+                </div>
+                <div class="card-info">
+                    <div class="card-name">${p.name}</div>
+                    <div class="card-model">${p.model}</div>
+                    <span class="card-coverage">适用${p.coverage}</span>
+                </div>
+            </div>
+        `;
+    }
+    
+    // ===== 打开详情页 =====
+    function openDetail(id) {
+        const p = products.find(x => x.id === id);
+        if (!p) return;
+        
+        currentProduct = p;
+        isDetailOpen = true;
+        history.pushState({page:'detail'}, '');
+        
+        document.getElementById('detailTitle').textContent = p.name;
+        
+        // 4个视频标签，自动找第一个有视频的作为默认
+        const videoKeys = ['unbox', 'install', 'oil', 'debug'];
+        const specsEntries = Object.entries(p.specs);
+        
+        // 找第一个有视频文件的标签作为默认
+        const firstVideoKey = videoKeys.find(k => p.videos && p.videos[k]) || videoKeys[0];
+        
+        let html = `
+            <div class="detail-product-header">
+                <div class="detail-name">${p.name}</div>
+                <div class="detail-model">型号：${p.model} ｜ 覆盖空间：${p.coverage}</div>
+            </div>
+        `;
+        
+        // 视频区 - 有视频的标签高亮，没有的灰色
+        html += `
+            <div class="video-section">
+                <div class="video-tabs">
+                    ${videoKeys.map((k) => {
+                        const hasVideo = p.videos && p.videos[k];
+                        const isDefault = k === firstVideoKey;
+                        return `<button class="video-tab ${isDefault ? 'active' : ''} ${hasVideo ? '' : 'disabled-tab'}" onclick="switchVideo('${k}', this, event)">${videoNames[k]}${hasVideo ? '' : ''}</button>`;
+                    }).join('')}
+                </div>
+                <div class="video-player" id="videoPlayer" onclick="playVideo()">
+                    <div class="video-placeholder" id="videoPlaceholder">
+                        <div class="play-icon">▶</div>
+                        <div>点击播放${videoNames[firstVideoKey]}</div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // 规格表
+        html += `
+            <div class="specs-section">
+                <div class="section-title">详细参数</div>
+                <table class="specs-table">
+                    ${specsEntries.map(([k, v]) => `
+                        <tr>
+                            <td>${k}</td>
+                            <td>${v}</td>
+                        </tr>
+                    `).join('')}
+                </table>
+            </div>
+        `;
+        
+        // 特点
+        html += `
+            <div class="features-section">
+                <div class="section-title">产品特点</div>
+                <ul class="feature-list">
+                    ${p.features.map(f => `<li>${f}</li>`).join('')}
+                </ul>
+            </div>
+        `;
+        
+        // 备注
+        if (p.notes) {
+            html += `
+                <div class="notes">
+                    <div class="notes-title">📝 备注说明</div>
+                    <div class="notes-text">${p.notes}</div>
+                </div>
+            `;
+        }
+        
+        // 联系
+        html += `
+            <div class="contact">
+                <div class="contact-title">联系我们 · 定制咨询</div>
+                <div class="contact-info">
+                    广州达塔香氛科技有限公司<br>
+                    地址：广州市番禺区沙湾街福涌村福兴路4号晋财大楼2楼<br>
+                    支持OEM/ODM定制，欢迎洽谈合作
+                </div>
+            </div>
+        `;
+        
+        document.getElementById('detailContent').innerHTML = html;
+        /* 默认选中第一个有视频的标签 */
+        currentVideoType = firstVideoKey;
+        
+        document.getElementById('detailPage').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    
+    // ===== 切换视频 =====
+    function switchVideo(type, btn, event) {
+        event.stopPropagation();
+        currentVideoType = type;
+        
+        document.querySelectorAll('.video-tab').forEach(t => t.classList.remove('active'));
+        btn.classList.add('active');
+        
+        const player = document.getElementById('videoPlayer');
+        player.innerHTML = `
+            <div class="video-placeholder" id="videoPlaceholder">
+                <div class="play-icon">▶</div>
+                <div>点击播放${videoNames[type]}</div>
+            </div>
+        `;
+        player.onclick = () => playVideo();
+    }
+    
+    // ===== 播放视频 =====
+    function playVideo() {
+        if (!currentProduct || !currentVideoType) return;
+        
+        var videoUrl = currentProduct.videos[currentVideoType];
+        if (!videoUrl) { showToast('视频文件暂未上传'); return; }
+        
+        var player = document.getElementById('videoPlayer');
+        player.onclick = null;
+        
+        /* 先清除旧内容，再创建video元素（苹果Safari兼容） */
+        player.innerHTML = '';
+        
+        var vid = document.createElement('video');
+        vid.id = 'detailVideo';
+        vid.controls = true;
+        vid.playsInline = true;       /* iOS Safari 内联播放 */
+        vid.setAttribute('webkit-playsinline', 'true');  /* iOS旧版兼容 */
+        vid.setAttribute('x5-playsinline', 'true');      /* 安卓微信兼容 */
+        vid.setAttribute('preload', 'metadata');
+        vid.style.cssText = 'width:100%;height:100%;position:absolute;top:0;left:0;background:#000;object-fit:contain;';
+        
+        var source = document.createElement('source');
+        source.src = videoUrl;
+        source.type = 'video/mp4';
+        vid.appendChild(source);
+        
+        /* 视频加载失败时显示提示 */
+        vid.onerror = function() {
+            showToast('视频加载失败，请稍后重试');
+        };
+        
+        player.appendChild(vid);
+        
+        /* 手动触发播放（苹果需要用户手势才能播放） */
+        vid.play().catch(function() {
+            /* 有些浏览器需要用户点播放按钮，这是正常的 */
+        });
+    }
+    
+    // ===== 返回/关闭 =====
+    function closeDetail() {
+        if (!isDetailOpen) return;
+        isDetailOpen = false;
+        
+        // 停止视频
+        const vid = document.getElementById('detailVideo');
+        if (vid) vid.pause();
+        
+        document.getElementById('detailPage').classList.remove('active');
+        document.body.style.overflow = '';
+        currentProduct = null;
+        
+        if (history.state && history.state.page === 'detail') {
+            history.back();
+        }
+    }
+    
+    function filterProducts(category, btn) {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        btn.classList.add('active');
+        renderProducts(category);
+    }
+    
+    /* 首页退出确认：连按两次后退才退出 */
+    var backPressCount = 0;
+    var backPressTimer = null;
+
+    window.addEventListener('popstate', function(e) {
+        if (isDetailOpen) {
+            closeDetail();
+        } else {
+            /* 首页：阻止退出，提示再按一次 */
+            history.pushState(null, '');
+            backPressCount++;
+            if (backPressCount === 1) {
+                showToast('再按一次返回键退出');
+                backPressTimer = setTimeout(function() { backPressCount = 0; }, 2000);
+            } else {
+                clearTimeout(backPressTimer);
+                backPressCount = 0;
+                history.go(-2);
+            }
+        }
+    });
+
+    /* 提示条 */
+    function showToast(msg) {
+        var old = document.getElementById('toast');
+        if (old) old.remove();
+        var t = document.createElement('div');
+        t.id = 'toast';
+        t.textContent = msg;
+        t.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.78);color:white;padding:12px 24px;border-radius:24px;font-size:15px;z-index:9999;white-space:nowrap;pointer-events:none;';
+        document.body.appendChild(t);
+        setTimeout(function() { t.remove(); }, 2000);
+    }
+
+    /* 初始化时压一个history记录 */
+    history.pushState(null, '');
+    renderProducts();
+    </script>
+</body>
+</html>
