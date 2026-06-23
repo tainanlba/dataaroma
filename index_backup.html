@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>DATA SCENT · 香氛科技</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+            background: #f5f5f7;
+            min-height: 100vh;
+            color: #1d1d1f;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        /* ===== 导航栏 ===== */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 48px;
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            z-index: 1000;
+        }
+        
+        .nav-brand {
+            font-size: 17px;
+            font-weight: 600;
+            color: #1d1d1f;
+            letter-spacing: -0.5px;
+        }
+        
+        .nav-brand span {
+            color: #6e6e73;
+            font-weight: 400;
+            margin-left: 8px;
+        }
+        
+        /* ===== Hero区域 ===== */
+        .hero {
+            margin-top: 48px;
+            background: white;
+            padding: 80px 20px 60px;
+            text-align: center;
+            border-bottom: 1px solid #d2d2d7;
+        }
+        
+        .hero-eyebrow {
+            font-size: 14px;
+            color: #6e6e73;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 18px;
+            font-weight: 500;
+        }
+        
+        .hero-title {
+            font-size: 56px;
+            font-weight: 700;
+            color: #1d1d1f;
+            letter-spacing: -2px;
+            line-height: 1.07;
+            margin-bottom: 20px;
+        }
+        
+        .hero-subtitle {
+            font-size: 28px;
+            font-weight: 600;
+            color: #6e6e73;
+            letter-spacing: -0.5px;
+            line-height: 1.35;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+        
+        .hero-price {
+            display: inline-block;
+            font-size: 21px;
+            color: #1d1d1f;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+        
+        .hero-cta {
+            display: inline-block;
+            background: #0071e3;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 980px;
+            font-size: 17px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .hero-cta:hover {
+            background: #0077ed;
+        }
+        
+        /* ===== 分类标签 ===== */
+        .category-bar {
+            background: white;
+            padding: 20px;
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #d2d2d7;
+            position: sticky;
+            top: 48px;
+            z-index: 999;
+        }
+        
+        .cat-btn {
+            padding: 8px 20px;
+            border-radius: 980px;
+            font-size: 14px;
+            background: #f5f5f7;
+            color: #1d1d1f;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .cat-btn:hover {
+            background: #e8e8ed;
+        }
+        
+        .cat-btn.active {
+            background: #1d1d1f;
+            color: white;
+        }
+        
+        /* ===== 产品网格 ===== */
+        .products {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px 80px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 420px;
+        }
+        
+        .product-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+        }
+        
+        .product-card:nth-child(even) {
+            direction: rtl;
+        }
+        
+        .product-card:nth-child(even) > * {
+            direction: ltr;
+        }
+        
+        .card-image {
+            background: linear-gradient(135deg, #f5f5f7 0%, #e8e8ed 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            position: relative;
+        }
+        
+        .card-image img {
+            max-width: 80%;
+            max-height: 80%;
+            object-fit: contain;
+            transition: transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+        
+        .product-card:hover .card-image img {
+            transform: scale(1.08);
+        }
+        
+        .card-content {
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .card-eyebrow {
+            font-size: 13px;
+            color: #6e6e73;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+        
+        .card-name {
+            font-size: 40px;
+            font-weight: 700;
+            color: #1d1d1f;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+            margin-bottom: 16px;
+        }
+        
+        .card-desc {
+            font-size: 17px;
+            color: #6e6e73;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+        
+        .card-price {
+            font-size: 21px;
+            color: #1d1d1f;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        .card-link {
+            font-size: 17px;
+            color: #0071e3;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .card-link:hover {
+            text-decoration: underline;
+        }
+        
+        .card-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: #0071e3;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 980px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        /* ===== 详情页 ===== */
+        .detail {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: white;
+            z-index: 2000;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .detail.active {
+            display: block;
+            animation: slideIn 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+        
+        .detail-nav {
+            position: sticky;
+            top: 0;
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            height: 48px;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            border-bottom: 1px solid #d2d2d7;
+            z-index: 100;
+        }
+        
+        .back-btn {
+            font-size: 17px;
+            color: #0071e3;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px 0;
+            font-weight: 500;
+        }
+        
+        .detail-inner {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+        
+        .detail-hero {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .detail-eyebrow {
+            font-size: 14px;
+            color: #6e6e73;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 14px;
+        }
+        
+        .detail-name {
+            font-size: 64px;
+            font-weight: 700;
+            letter-spacing: -3px;
+            line-height: 1.05;
+            margin-bottom: 20px;
+            color: #1d1d1f;
+        }
+        
+        .detail-price {
+            font-size: 28px;
+            color: #1d1d1f;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .detail-price-note {
+            font-size: 17px;
+            color: #6e6e73;
+        }
+        
+        /* 视频区 */
+        .video-section {
+            margin: 40px 0;
+            background: #f5f5f7;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        
+        .video-tabs {
+            display: flex;
+            padding: 16px 20px;
+            gap: 10px;
+            border-bottom: 1px solid #d2d2d7;
+        }
+        
+        .video-tab {
+            padding: 8px 18px;
+            border-radius: 980px;
+            font-size: 14px;
+            background: white;
+            color: #1d1d1f;
+            border: 1px solid #d2d2d7;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        
+        .video-tab.active {
+            background: #1d1d1f;
+            color: white;
+            border-color: #1d1d1f;
+        }
+        
+        .video-player {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%;
+            background: #1d1d1f;
+            cursor: pointer;
+        }
+        
+        .video-player video {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .video-placeholder {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+        }
+        
+        .video-placeholder .icon {
+            font-size: 60px;
+            margin-bottom: 10px;
+            opacity: 0.5;
+        }
+        
+        /* 规格表 */
+        .specs-section {
+            margin: 60px 0;
+        }
+        
+        .section-title {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 30px;
+            color: #1d1d1f;
+        }
+        
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1px;
+            background: #d2d2d7;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        
+        .spec-item {
+            background: white;
+            padding: 24px;
+        }
+        
+        .spec-label {
+            font-size: 12px;
+            color: #6e6e73;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .spec-value {
+            font-size: 21px;
+            color: #1d1d1f;
+            font-weight: 600;
+        }
+        
+        /* 特点列表 */
+        .features-section {
+            margin: 60px 0;
+        }
+        
+        .feature-row {
+            display: flex;
+            align-items: flex-start;
+            padding: 24px 0;
+            border-bottom: 1px solid #d2d2d7;
+        }
+        
+        .feature-num {
+            font-size: 48px;
+            font-weight: 700;
+            color: #f5f5f7;
+            margin-right: 30px;
+            min-width: 60px;
+        }
+        
+        .feature-text {
+            font-size: 21px;
+            color: #1d1d1f;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+        
+        /* 备注 */
+        .notes-section {
+            background: #fff9e6;
+            padding: 30px;
+            border-radius: 20px;
+            margin: 40px 0;
+        }
+        
+        .notes-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #946300;
+            margin-bottom: 12px;
+        }
+        
+        .notes-text {
+            font-size: 17px;
+            color: #733c00;
+            line-height: 1.7;
+        }
+        
+        /* 联系 */
+        .contact-section {
+            text-align: center;
+            padding: 60px 0;
+            border-top: 1px solid #d2d2d7;
+            margin-top: 60px;
+        }
+        
+        .contact-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #1d1d1f;
+        }
+        
+        .contact-info {
+            font-size: 17px;
+            color: #6e6e73;
+            line-height: 1.8;
+        }
+        
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 40px; }
+            .hero-subtitle { font-size: 21px; }
+            .product-card { grid-template-columns: 1fr; }
+            .product-card:nth-child(even) { direction: ltr; }
+            .card-name { font-size: 32px; }
+            .card-image { min-height: 300px; }
+            .detail-name { font-size: 40px; }
+            .section-title { font-size: 24px; }
+            .feature-num { font-size: 32px; min-width: 40px; }
+            .feature-text { font-size: 17px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航 -->
+    <div class="nav">
+        <div class="nav-brand">DATA SCENT <span>达塔香氛</span></div>
+    </div>
+    
+    <!-- Hero -->
+    <div class="hero">
+        <div class="hero-eyebrow">专业香氛科技</div>
+        <div class="hero-title">为每一个空间<br>定制专属香气</div>
+        <div class="hero-subtitle">家居 · 车载 · 商用<br>全场景香氛解决方案</div>
+        <div class="hero-price">¥30 起</div><br>
+        <button class="hero-cta" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">探索全部产品</button>
+    </div>
+    
+    <!-- 分类 -->
+    <div class="category-bar">
+        <button class="cat-btn active" onclick="filterProducts('all', this)">全部</button>
+        <button class="cat-btn" onclick="filterProducts('car', this)">车载</button>
+        <button class="cat-btn" onclick="filterProducts('home', this)">家居</button>
+        <button class="cat-btn" onclick="filterProducts('biz', this)">商用</button>
+    </div>
+    
+    <!-- 产品列表 -->
+    <div class="products" id="products"></div>
+    
+    <!-- 详情页 -->
+    <div class="detail" id="detailPage">
+        <div class="detail-nav">
+            <button class="back-btn" onclick="closeDetail()">← 返回</button>
+        </div>
+        <div class="detail-inner" id="detailContent"></div>
+    </div>
+    
+    <script>
+    const products = [
+        {
+            id: 'car001',
+            name: '车载出风口香薰',
+            model: 'TC010',
+            category: 'car',
+            coverage: '30m³',
+            price: '¥30',
+            priceNote: '礼品盒包装',
+            badge: '热销',
+            desc: '极简金属设计，自然挥发，长效留香30-45天',
+            image: 'images/chezaichukou.jpeg',
+            specs: [
+                {label:'覆盖空间', value:'30m³'},
+                {label:'材质', value:'金属'},
+                {label:'安装', value:'汽车出风口'},
+                {label:'续航', value:'30-45天'}
+            ],
+            features: ['极简金属设计', '自然挥发无需通电', '长效留香30-45天', '随空调风扩香'],
+            notes: '礼品盒包装，钙片香片持续留香。',
+            videos: {}
+        },
+        {
+            id: 'car002',
+            name: '车载香薰机',
+            model: 'TC100',
+            category: 'car',
+            coverage: '100m³',
+            price: '¥45',
+            priceNote: '按键蓝牙版',
+            badge: '推荐',
+            desc: '4档智能模式，停车自动休眠，USB-C充电',
+            image: 'images/tc100.png',
+            specs: [
+                {label:'覆盖', value:'100m³'},
+                {label:'容量', value:'7.5ml×4'},
+                {label:'功率', value:'DC5V / 1.5W'},
+                {label:'噪音', value:'<32dB'}
+            ],
+            features: ['4档智能模式', '智能启停休眠', 'USB-C充电', '标配4瓶精油'],
+            notes: '可定制包装，激光LOGO+1元/台。',
+            videos: {unbox:'videos/tc100_unbox.mp4', install:'videos/tc100_install.mp4'}
+        },
+        {
+            id: 'car003',
+            name: '车载杯座香薰机',
+            model: 'TC-CUP',
+            category: 'car',
+            coverage: '100m³',
+            price: '¥90',
+            priceNote: '',
+            badge: '',
+            desc: '杯座设计即插即用，5V插电持续工作',
+            image: 'images/chezaibei.png',
+            specs: [
+                {label:'覆盖', value:'100m³'},
+                {label:'容量', value:'10ml'},
+                {label:'功率', value:'DC5V / 1W'},
+                {label:'噪音', value:'<30dB'}
+            ],
+            features: ['杯座设计即插即用', '5V插电持续工作', '二流体雾化', '多色可选'],
+            notes: '机身小喷雾大，适合各类车型。',
+            videos: {}
+        },
+        {
+            id: 'home001',
+            name: '灵动香氛机',
+            model: 'LD501',
+            category: 'home',
+            coverage: '500m³',
+            price: '¥95',
+            priceNote: '按键蓝牙版',
+            badge: '性价比',
+            desc: '超肌肤手感材质，超静音38dB，260ml大容量',
+            image: 'images/LD501.png',
+            specs: [
+                {label:'覆盖', value:'500m³'},
+                {label:'容量', value:'260ml'},
+                {label:'功率', value:'DC12V / 8W'},
+                {label:'噪音', value:'<38dB'}
+            ],
+            features: ['超肌肤手感材质', '超静音38dB', '隐藏式电源口', '260ml大容量'],
+            notes: '标配说明书，1000份起订。',
+            videos: {install:'videos/ld501_install.mp4'}
+        },
+        {
+            id: 'home002',
+            name: '灵动香氛机',
+            model: 'LD500',
+            category: 'home',
+            coverage: '500m³',
+            price: '¥99',
+            priceNote: '¥109 WIFI版',
+            badge: '热销',
+            desc: 'APP智能控制，超肌肤手感，雾化细颗粒标杆',
+            image: 'images/LD500.png',
+            specs: [
+                {label:'覆盖', value:'500m³'},
+                {label:'容量', value:'260ml'},
+                {label:'功率', value:'DC12V / 8W'},
+                {label:'噪音', value:'<38dB'}
+            ],
+            features: ['APP智能控制', '超肌肤手感', '超静音设计', '雾化细颗粒'],
+            notes: '可选按键版¥99或WIFI版¥109。',
+            videos: {unbox:'videos/ld500_unbox.mp4'}
+        },
+        {
+            id: 'home003',
+            name: '吸顶香氛机',
+            model: 'TX500',
+            category: 'home',
+            coverage: '1000m³',
+            price: '¥135',
+            priceNote: '¥145 WIFI版',
+            badge: '三合一',
+            desc: '吸顶/桌面/挂壁三合一，400ml大容量',
+            image: 'images/TX500.png',
+            specs: [
+                {label:'覆盖', value:'1000m³'},
+                {label:'容量', value:'400ml'},
+                {label:'功率', value:'DC12V / 8W'},
+                {label:'噪音', value:'<38dB'}
+            ],
+            features: ['三合一安装方式', '400ml大容量', '蓝牙/WIFI调控', '吸顶不占空间'],
+            notes: '吸顶安装需预留电源，+50元/台。',
+            videos: {}
+        },
+        {
+            id: 'biz001',
+            name: '小魔方香氛机',
+            model: 'TD2500',
+            category: 'biz',
+            coverage: '2500m³',
+            price: '¥350',
+            priceNote: '¥360 WIFI版',
+            badge: '小体积',
+            desc: '体积小安装灵活，1000ml大容量，简约高端',
+            image: 'images/td2500.png',
+            specs: [
+                {label:'覆盖', value:'2500m³'},
+                {label:'容量', value:'1000ml'},
+                {label:'功率', value:'DC12V / 13W'},
+                {label:'噪音', value:'<42dB'}
+            ],
+            features: ['体积小安装灵活', '三面可挂墙', '1000ml大容量', '简约高端'],
+            notes: '三面挂墙设计，适合空间有限场所。',
+            videos: {}
+        },
+        {
+            id: 'biz002',
+            name: '酒吧香氛机',
+            model: 'TJ2500',
+            category: 'biz',
+            coverage: '2500m³',
+            price: '¥480',
+            priceNote: '',
+            badge: '专业',
+            desc: '酒吧专用设计，45°送风7000R，多场景安装',
+            image: 'images/tj2500.png',
+            specs: [
+                {label:'覆盖', value:'2500m³'},
+                {label:'容量', value:'1000ml铝瓶'},
+                {label:'功率', value:'DC12V / 18W'},
+                {label:'噪音', value:'<50dB'}
+            ],
+            features: ['酒吧专用设计', '45°送风7000R', '多场景安装', '1000ml大容量'],
+            notes: '酒吧、KTV、夜店等专业场所首选。',
+            videos: {}
+        },
+        {
+            id: 'biz003',
+            name: '落地香氛机',
+            model: 'TL2500',
+            category: 'biz',
+            coverage: '2500m³',
+            price: '¥450',
+            priceNote: '¥460 WIFI版',
+            badge: '高端',
+            desc: '涡轮风扇4500R，简约高端设计，标配铝合金支架',
+            image: 'images/TL2500.png',
+            specs: [
+                {label:'覆盖', value:'2500m³'},
+                {label:'容量', value:'1000ml铝瓶'},
+                {label:'功率', value:'DC12V / 15W'},
+                {label:'噪音', value:'<42dB'}
+            ],
+            features: ['涡轮风扇4500R', '简约高端设计', '金属机身', '适合酒店大堂'],
+            notes: '标配铝合金支架，落地安装。',
+            videos: {}
+        },
+        {
+            id: 'biz004',
+            name: '落地香氛机',
+            model: 'T2 PRO',
+            category: 'biz',
+            coverage: '2500m³',
+            price: '¥450',
+            priceNote: '¥460 WIFI版',
+            badge: '旗舰',
+            desc: '旗舰级商用，智能定时喷香，高端酒店标配',
+            image: 'images/T2PRO.png',
+            specs: [
+                {label:'覆盖', value:'2500m³'},
+                {label:'容量', value:'1000ml铝瓶'},
+                {label:'功率', value:'DC12V / 15W'},
+                {label:'噪音', value:'<42dB'}
+            ],
+            features: ['旗舰级商用', '涡轮风扇4500R', '智能定时喷香', '高端酒店标配'],
+            notes: 'T2 PRO / T1 PRO为同系列产品。',
+            videos: {}
+        },
+        {
+            id: 'biz007',
+            name: '分体式双泵香氛机',
+            model: 'TS8000',
+            category: 'biz',
+            coverage: '8000m³',
+            price: '¥550',
+            priceNote: '¥560 WIFI版',
+            badge: '双泵',
+            desc: '双雾化系统，双1000ml油瓶，时尚小体积',
+            image: 'images/ts8000.png',
+            specs: [
+                {label:'覆盖', value:'8000m³'},
+                {label:'容量', value:'1000ml×2'},
+                {label:'功率', value:'DC12V / 22W'},
+                {label:'噪音', value:'<42dB'}
+            ],
+            features: ['双雾化系统', '双1000ml油瓶', '可定制大容量', '时尚小体积'],
+            notes: '分体式设计：机器+配件分开包装。',
+            videos: {}
+        }
+    ];
+    
+    const videoNames = {unbox:'开箱', install:'安装', oil:'精油', debug:'调试'};
+    let currentProduct = null;
+    let isDetailOpen = false;
+    
+    function renderProducts(category = 'all') {
+        const container = document.getElementById('products');
+        const filtered = category === 'all' ? products : products.filter(p => p.category === category);
+        
+        if (filtered.length === 0) {
+            container.innerHTML = '<div style="text-align:center;padding:80px 20px;color:#6e6e73;">暂无产品</div>';
+            return;
+        }
+        
+        container.innerHTML = filtered.map((p, i) => `
+            <div class="product-card" onclick="openDetail('${p.id}')">
+                <div class="card-image">
+                    ${p.badge ? `<div class="card-badge">${p.badge}</div>` : ''}
+                    <img src="${p.image}" alt="${p.name}" onerror="this.style.display='none'">
+                </div>
+                <div class="card-content">
+                    <div class="card-eyebrow">${p.model}</div>
+                    <div class="card-name">${p.name}</div>
+                    <div class="card-desc">${p.desc}</div>
+                    <div class="card-price">${p.price}</div>
+                    <div class="card-link">了解更多 ›</div>
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    function openDetail(id) {
+        const p = products.find(x => x.id === id);
+        if (!p) return;
+        
+        currentProduct = p;
+        isDetailOpen = true;
+        history.pushState({page:'detail'}, '');
+        
+        const content = document.getElementById('detailContent');
+        const videoKeys = Object.keys(p.videos || {}).filter(k => p.videos[k]);
+        
+        content.innerHTML = `
+            <div class="detail-hero">
+                <div class="detail-eyebrow">${p.model}</div>
+                <div class="detail-name">${p.name}</div>
+                <div class="detail-price">${p.price}</div>
+                <div class="detail-price-note">${p.priceNote}</div>
+            </div>
+            
+            ${videoKeys.length > 0 ? `
+            <div class="video-section">
+                <div class="video-tabs">
+                    ${videoKeys.map((k, i) => `
+                        <button class="video-tab ${i === 0 ? 'active' : ''}" onclick="switchVideo('${k}', this)">${videoNames[k]}</button>
+                    `).join('')}
+                </div>
+                <div class="video-player" id="videoPlayer" onclick="playVideo()">
+                    <div class="video-placeholder" id="videoPlaceholder">
+                        <div class="icon">▶</div>
+                        <div>点击播放${videoNames[videoKeys[0]]}视频</div>
+                    </div>
+                </div>
+            </div>
+            ` : ''}
+            
+            <div class="specs-section">
+                <div class="section-title">技术规格</div>
+                <div class="specs-grid">
+                    ${p.specs.map(s => `
+                        <div class="spec-item">
+                            <div class="spec-label">${s.label}</div>
+                            <div class="spec-value">${s.value}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+            
+            <div class="features-section">
+                <div class="section-title">核心特点</div>
+                ${p.features.map((f, i) => `
+                    <div class="feature-row">
+                        <div class="feature-num">0${i+1}</div>
+                        <div class="feature-text">${f}</div>
+                    </div>
+                `).join('')}
+            </div>
+            
+            ${p.notes ? `
+            <div class="notes-section">
+                <div class="notes-title">📝 备注说明</div>
+                <div class="notes-text">${p.notes}</div>
+            </div>
+            ` : ''}
+            
+            <div class="contact-section">
+                <div class="contact-title">联系我们</div>
+                <div class="contact-info">
+                    广州达塔香氛科技有限公司<br>
+                    地址：广州市番禺区沙湾街福涌村福兴路4号晋财大楼2楼
+                </div>
+            </div>
+        `;
+        
+        if (videoKeys.length > 0) {
+            currentVideoType = videoKeys[0];
+        }
+        
+        document.getElementById('detailPage').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    
+    let currentVideoType = null;
+    
+    function switchVideo(type, btn) {
+        currentVideoType = type;
+        document.querySelectorAll('.video-tab').forEach(t => t.classList.remove('active'));
+        btn.classList.add('active');
+        
+        const placeholder = document.getElementById('videoPlaceholder');
+        if (placeholder) {
+            placeholder.innerHTML = `<div class="icon">▶</div><div>点击播放${videoNames[type]}视频</div>`;
+        }
+        
+        const player = document.getElementById('videoPlayer');
+        if (player) {
+            player.innerHTML = `
+                <div class="video-placeholder" id="videoPlaceholder">
+                    <div class="icon">▶</div>
+                    <div>点击播放${videoNames[type]}视频</div>
+                </div>
+            `;
+            player.onclick = () => playVideo();
+        }
+    }
+    
+    function playVideo() {
+        if (!currentProduct || !currentVideoType) return;
+        
+        const videoUrl = currentProduct.videos[currentVideoType];
+        if (!videoUrl) return;
+        
+        const player = document.getElementById('videoPlayer');
+        player.innerHTML = `
+            <video id="detailVideo" controls playsinline webkit-playsinline x5-video-player-type="h5" autoplay style="width:100%;height:100%;position:absolute;top:0;left:0;background:#000;" onclick="event.stopPropagation()">
+                <source src="${videoUrl}" type="video/mp4">
+            </video>
+        `;
+        player.onclick = null;
+    }
+    
+    function closeDetail() {
+        if (!isDetailOpen) return;
+        isDetailOpen = false;
+        
+        document.getElementById('detailPage').classList.remove('active');
+        document.body.style.overflow = '';
+        currentProduct = null;
+        
+        if (history.state && history.state.page === 'detail') {
+            history.back();
+        }
+    }
+    
+    function filterProducts(category, btn) {
+        document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderProducts(category);
+    }
+    
+    window.addEventListener('popstate', function(e) {
+        if (isDetailOpen) {
+            e.preventDefault();
+            closeDetail();
+        }
+    });
+    
+    renderProducts();
+    </script>
+</body>
+</html>
